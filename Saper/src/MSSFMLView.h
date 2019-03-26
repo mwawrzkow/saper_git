@@ -10,20 +10,15 @@
 
 
 //Including SFML Libraries
-#include <SFML/Graphics.hpp>
 
-//GameEngine
-#include "MinesweeperBoard/MSBoardTextView.h"
+#include <string>
 
-//Input Module
-#include "MSBoardInput.h"
-
-//GameStates Modules
-#include "WindowStates/WindowStates.h"
+#include "WindowStates/FileIO/FileManager.h"
 #include "WindowStates/Game.h"
 #include "WindowStates/InGameMenu.h"
 #include "WindowStates/LoadingScreen.h"
 #include "WindowStates/MainMenu.h"
+#include "WindowStates/WindowStates.h"
 
 
 
@@ -39,7 +34,7 @@ class MS_SFML_View{
 	WindowState::Game Playing;
 	WindowState::InGameMenu MenuWhilePlaying;
 	WindowState::LoadingScreen Loading;
-	WindowState::MainMenu Menu;
+	WindowState::MainMenu GameMenu;
 
 
 	/*

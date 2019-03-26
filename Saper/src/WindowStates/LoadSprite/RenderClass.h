@@ -11,8 +11,8 @@
 #include <string>
 #include <vector>
 
-#include "LoadSprite.h"
-#include "StateOfClass.h"
+#include "Object.h"
+#include "texturebackend/StateOfClass.h"
 
 namespace WindowState {
 
@@ -20,10 +20,10 @@ class RenderClass {
 	std::string ConfigFile;
 	ClassStates::state ClassState;
 	std::vector<std::string> TexturesLink;
-	std::vector<Graphic::LoadSprite> toRender;
-	const std::vector<std::string>&allowedNames;
+	std::vector<Graphic::Object> toRender;
+	const std::vector<std::string>*allowedNames;
 public:
-	RenderClass(std::string ConfigFile, std::vector<std::string>&allowedNames);
+	RenderClass(std::string ConfigFile, std::vector<std::string>*allowedNames);
 	const ClassStates::state getState() const;
 	void LoadTextureDirectories();
 protected:
@@ -34,6 +34,9 @@ protected:
 			int startingPos, int frames, bool isSmooth, bool isRepetable);
 	void createSprite(sf::Texture &ref, char* name, int width, int height,
 			int startingPos, int frames);
+	std::string findTextureLoc(std::string tmp);
+	const SpriteSettings::TextureLoad &findTexture(std::string tmp);
+	std::vector<Graphic::Object>* getQueue();
 };
 
 } /* namespace WindowState */

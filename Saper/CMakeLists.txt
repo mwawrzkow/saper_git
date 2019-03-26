@@ -29,9 +29,9 @@ add_executable(Saper Saper.cpp
      src/WindowStates/MainMenu/NewGame.cpp
      src/WindowStates/MainMenu/Options.cpp
      
-     src/WindowStates/LoadSprite/SpriteOptions.cpp
-     src/WindowStates/LoadSprite/TextureLoad.cpp
-     src/WindowStates/LoadSprite/LoadSprite.cpp
+     src/WindowStates/LoadSprite/texturebackend/SpriteOptions.cpp
+     src/WindowStates/LoadSprite/texturebackend/TextureLoad.cpp
+     src/WindowStates/LoadSprite/Object.cpp
      src/WindowStates/LoadSprite/RenderClass.cpp)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})

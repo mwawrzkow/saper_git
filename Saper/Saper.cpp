@@ -32,8 +32,7 @@ int main(int argc, char **argv) {
 	getexepath(argv[0], s);
 	std::cout << s + "config.conf" << std::endl;
 	IO::FileManager settings(s + "config.conf");
-	std::thread thread_object(IO::LFI, std::ref(settings));
-	thread_object.join();
+	LFI(settings);
 	sf::RenderWindow ref(
 			sf::VideoMode(settings.value_INT(IO::Information::WIDTH),
 					settings.value_INT(IO::Information::HEIGHT)),

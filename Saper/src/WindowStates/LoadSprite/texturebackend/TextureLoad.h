@@ -22,7 +22,7 @@ class TextureLoad {
 public:
 	//TextureLoad needs basic information for sf::Texture constructor.
 	TextureLoad(std::string location, bool isSmooth, bool isRepetable);
-	const sf::Texture &ReturnTexture() const;
+	const sf::Texture &getTexture() const;
 	const char* getLocation() const;
 };
 

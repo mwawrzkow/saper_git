@@ -11,7 +11,7 @@ namespace WindowState {
 
 
 MainMenu::MainMenu(std::string MenuFileList) :
-		state(State::NONE),Graphic(MenuFileList + "config.conf",availibeNames) {
+		state(State::NONE),Menu(MenuFileList + "config.conf",&availibeNames) {
 
 }
 
@@ -26,11 +26,12 @@ void MainMenu::start()
 }
 void MainMenu::LoadFiles()
 {
+	Menu.LoadTextureDirectories();
 	FileList();
 }
 
 void MainMenu::LoadSprites(){
-if(Graphic.getState().areFilesLoaded != true)
+//if(Graphic.getState().areFilesLoaded != true)
 	return;
 }
 

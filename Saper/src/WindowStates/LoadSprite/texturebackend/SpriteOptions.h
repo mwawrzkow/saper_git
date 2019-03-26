@@ -18,7 +18,7 @@ class SpriteOptions {
 	const int frames;
 	const int startingPos;
 public:
-	SpriteOptions(char* name, int width,int height,int startingPos,int frames);
+	SpriteOptions(const char* name, int width,int height,int startingPos,int frames);
 	const int getWidth()const;
 	const int getHeight()const;
 	const char* getName()const;

@@ -5,11 +5,11 @@
  *      Author: marcin
  */
 
-#include "SpriteOptions.h"
+#include "../texturebackend/SpriteOptions.h"
 
 namespace SpriteSettings {
 
-SpriteOptions::SpriteOptions(char* name, int width, int height,int startingPos, int frames) :
+SpriteOptions::SpriteOptions(const char* name, int width, int height,int startingPos, int frames) :
 		name(name), width(width), height(height),startingPos(startingPos), frames(frames) {
 }
 const int SpriteOptions::getWidth() const {

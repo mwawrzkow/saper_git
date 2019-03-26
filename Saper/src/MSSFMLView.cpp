@@ -12,13 +12,13 @@ MS_SFML_View::MS_SFML_View(sf::RenderWindow &ptr, IO::FileManager &settings, std
 		settings(settings),
 		GameWindow(ptr),
 		WindowState(GameState::State::MainMenu),
-		Menu(gamedir+settings.LoadFileInformation(IO::Information::MENU_FILE_LIST).value)
+		GameMenu(gamedir+settings.LoadFileInformation(IO::Information::MENU_FILE_LIST).value)
 {
 	start();
 }
 
 void MS_SFML_View::start() {
-	Menu.start();
+	GameMenu.start();
 	while (GameWindow.isOpen()) {
 		stateOfView();
 	}

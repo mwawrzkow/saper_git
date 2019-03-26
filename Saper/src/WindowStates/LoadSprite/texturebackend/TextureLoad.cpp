@@ -5,7 +5,7 @@
  *      Author: marcin
  */
 
-#include "TextureLoad.h"
+#include "../texturebackend/TextureLoad.h"
 
 namespace SpriteSettings {
 
@@ -16,7 +16,7 @@ TextureLoad::TextureLoad(std::string location,bool isSmooth, bool isRepetable) :
 	Texture.setRepeated(isRepetable);
 
 }
-const sf::Texture &TextureLoad::ReturnTexture()const{
+const sf::Texture &TextureLoad::getTexture()const{
 	return Texture;
 }
 
