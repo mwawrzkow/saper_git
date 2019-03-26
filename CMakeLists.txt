@@ -6,7 +6,8 @@ project (Saper)
 find_package(SFML  REQUIRED graphics window system)
 add_executable(Saper Saper.cpp
  	 src/MinesweeperBoard/MinesweeperBoard.cpp
-     src/MinesweeperBoard/MSBoardTextView.cpp)
+     src/MinesweeperBoard/MSBoardTextView.cpp
+     src/MinesweeperBoard/MSTextController.cpp)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(Saper ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
