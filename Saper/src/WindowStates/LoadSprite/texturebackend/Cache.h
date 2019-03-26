@@ -8,9 +8,13 @@
 #ifndef SRC_WINDOWSTATES_LOADSPRITE_TEXTUREBACKEND_CACHE_H_
 #define SRC_WINDOWSTATES_LOADSPRITE_TEXTUREBACKEND_CACHE_H_
 
+#include <SFML/Graphics/Texture.hpp>
+#include <map>
+
 namespace Texture {
 
 class Cache {
+	std::map<sf::Texture>TexturesCache;
 public:
 	Cache();
 };
