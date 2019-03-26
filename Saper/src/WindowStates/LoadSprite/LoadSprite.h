@@ -2,7 +2,14 @@
  * LoadSprite.h
  *
  *  Created on: Mar 13, 2019
- *      Author: marcin
+ *      Author: Marcin Wawrzków
+ *
+ *
+ * Description: LoadSprite Class:
+ *                         * Holds sf::SpriteObject.
+ *              Functionality:
+ *                         * Update Sprite frame by frame.
+ *                         * Allows to return sprite by reference to render.
  */
 
 #ifndef SRC_WINDOWSTATES_LOADSPRITE_LOADSPRITE_H_

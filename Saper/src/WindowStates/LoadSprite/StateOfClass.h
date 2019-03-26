@@ -1,3 +1,13 @@
+/*
+ * StateOfClass.h
+ *
+ *  Created on: 20 mar 2019
+ *      Author: Marcin Wawrzków
+ *
+ * Description:Simple structure that holds all availibe states of RenderClass object.
+ */
+
+
 #ifndef SRC_WINDOWSSTATES_LOADsPRITE_STATEOFCLASS_H_
 #define SRC_WINDOWSSTATES_LOADsPRITE_STATEOFCLASS_H_
 

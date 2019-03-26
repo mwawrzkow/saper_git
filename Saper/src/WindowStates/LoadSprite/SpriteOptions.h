@@ -2,7 +2,9 @@
  * SpriteOptions.h
  *
  *  Created on: 21 mar 2019
- *      Author: marcin
+ *      Author: Marcin Wawrzków
+ *
+ * Description: All settings of LoadSprite object
  */
 
 #ifndef SRC_WINDOWSTATES_LOADSPRITE_SPRITEOPTIONS_H_

@@ -6,7 +6,7 @@
  */
 
 #include "RenderClass.h"
-
+#include "Poco/NumberParser.h"
 #include <Poco/String.h>
 #include <fstream>
 #include <iostream>
@@ -34,8 +34,13 @@ void RenderClass::LoadTextureDirectories() {
 	ConfigFile.erase(ConfigFile.end() - 11, ConfigFile.end());
 	while (std::getline(file, line)) {
 		std::vector<std::string> value = values(line);
-		if (isRepeated(ConfigFile + value[3])) {
-
+		if (isRepeated(ConfigFile + value[0])) {
+			Graphic::LoadSprite tmp(value[0], value[1],
+					Poco::NumberParser::parse(value[2]),
+					Poco::NumberParser::parse(value[3]),
+					Poco::NumberParser::parse(value[4]),
+					Poco::NumberParser::parse(value[5]),
+					Poco::NumberParser::parse(value[6]));
 		} else {
 
 		}
@@ -48,8 +53,8 @@ void RenderClass::LoadTextureDirectories() {
 bool RenderClass::isRepeated(std::string tmp) {
 	for (std::string temp : TexturesLink)
 		if (Poco::icompare(temp, tmp) == 0)
-			return false;
-	return true;
+			return true;
+	return false;
 
 }
 std::vector<std::string> RenderClass::values(std::string line) {
@@ -62,8 +67,6 @@ std::vector<std::string> RenderClass::values(std::string line) {
 	for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
 		std::smatch match = *i;
 		std::string match_str = match.str();
-		if (c == 5)
-			break;
 		tmp.push_back(match_str);
 		c++;
 	}
@@ -71,14 +74,16 @@ std::vector<std::string> RenderClass::values(std::string line) {
 
 }
 
-void RenderClass::createSprite(char* TextureLoc, char* name, int width, int height,
-		int startingPos, int frames, bool isSmooth, bool isRepetable){
-	Graphic::LoadSprite tmp(TextureLoc,name,width,height,startingPos,frames,isSmooth,isRepetable);
+void RenderClass::createSprite(char* TextureLoc, char* name, int width,
+		int height, int startingPos, int frames, bool isSmooth,
+		bool isRepetable) {
+	Graphic::LoadSprite tmp(TextureLoc, name, width, height, startingPos,
+			frames, isSmooth, isRepetable);
 	toRender.push_back(tmp);
 }
-void RenderClass::createSprite(sf::Texture &ref, char* name, int width, int height,
-		int startingPos, int frames){
-	Graphic::LoadSprite tmp(ref,name,width,height,startingPos,frames);
+void RenderClass::createSprite(sf::Texture &ref, char* name, int width,
+		int height, int startingPos, int frames) {
+	Graphic::LoadSprite tmp(ref, name, width, height, startingPos, frames);
 }
 
 const ClassStates::state RenderClass::getState() const {
