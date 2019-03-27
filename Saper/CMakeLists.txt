@@ -29,6 +29,7 @@ add_executable(Saper Saper.cpp
      src/WindowStates/MainMenu/NewGame.cpp
      src/WindowStates/MainMenu/Options.cpp
      
+     src/WindowStates/LoadSprite/texturebackend/Cache.cpp
      src/WindowStates/LoadSprite/texturebackend/SpriteOptions.cpp
      src/WindowStates/LoadSprite/texturebackend/TextureLoad.cpp
      src/WindowStates/LoadSprite/Object.cpp

@@ -13,5 +13,11 @@ Cache::Cache() {
 	// TODO Auto-generated constructor stub
 
 }
+void Cache::addTexture(std::string name, sf::Texture temp) {
+	TextureCache.insert(std::pair<std::string, sf::Texture>(name, temp));
+}
+sf::Texture* Cache::getTexture(std::string name) {
+	return &TextureCache[name];
+}
 
 } /* namespace Texture */

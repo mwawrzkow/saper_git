@@ -10,13 +10,16 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <map>
+#include <string>
 
 namespace Texture {
 
 class Cache {
-	std::map<sf::Texture>TexturesCache;
+	std::map<std::string,sf::Texture>TextureCache;
 public:
 	Cache();
+	void addTexture(std::string name,sf::Texture temp);
+	sf::Texture* getTexture(std::string name);
 };
 
 } /* namespace Texture */
