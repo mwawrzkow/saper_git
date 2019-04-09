@@ -17,7 +17,6 @@ MSTextController::MSTextController(GameLogic::MinesweeperBoard &board,
 		board(board),
 		view(view)
 {
-	start();
 
 }
 

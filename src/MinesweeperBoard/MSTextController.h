@@ -17,7 +17,7 @@ class MSTextController {
 	const GameTextView::MSBoardTextView &view;
 public:
 	MSTextController(GameLogic::MinesweeperBoard &board, GameTextView::MSBoardTextView &view);
-protected:
+public:
 	void display();
 	void move();
 	void start();
