@@ -11,6 +11,7 @@
 
 //Including SFML Libraries
 
+#include <memory>
 #include <string>
 
 #include "WindowStates/FileIO/FileManager.h"
@@ -35,6 +36,7 @@ class MS_SFML_View{
 	WindowState::InGameMenu MenuWhilePlaying;
 	WindowState::LoadingScreen Loading;
 	WindowState::MainMenu GameMenu;
+	std::shared_ptr<Texture::Cache>TextureCache;
 
 
 	/*

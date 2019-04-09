@@ -7,11 +7,13 @@
 
 #include "MainMenu.h"
 
+#include "LoadSprite/texturebackend/Cache.h"
+
 namespace WindowState {
 
 
-MainMenu::MainMenu(std::string MenuFileList) :
-		state(State::NONE),Menu(MenuFileList + "config.conf",&availibeNames) {
+MainMenu::MainMenu(std::string MenuFileList, std::shared_ptr<Texture::Cache>TextureCache) :
+		state(State::NONE),Menu(MenuFileList + "config.conf",&availibeNames,TextureCache){
 
 }
 

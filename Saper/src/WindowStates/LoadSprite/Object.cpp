@@ -14,22 +14,19 @@
 
 namespace Graphic {
 
-Object::Object(const char* TextureLoc, const char* name, int width, int height,
-		int startingPos, int frames, bool isSmooth, bool isRepetable) :
-		Texture(TextureLoc, isSmooth, isRepetable) {
-	SpriteSettings::SpriteOptions Settings(name, width, height,startingPos,
-			frames);
-	states.push_back(Settings);
-}
-Object::Object(const SpriteSettings::TextureLoad &ref, const char* name,
+
+Object::Object(sf::Texture *ref, const char* name,
 		int width, int height, int startingPos, int frames) :
 		Texture(ref) {
 	SpriteSettings::SpriteOptions Settings(name, width, height,startingPos,
 			frames);
+	Sprite.setTexture(*Texture);
 	states.push_back(Settings);
+
 }
+Object::Object(){};
 void Object::createSprite() {
-	Sprite.setTexture(Texture.getTexture());
+
 	Sprite.setTextureRect(
 			sf::IntRect(0, 0, states[state].getWidth(), states[state].getHeight()));
 }
@@ -46,9 +43,7 @@ const sf::Sprite& Object::returnSprite() {
 	return Sprite;
 }
 
-const SpriteSettings::TextureLoad& Object::getSharedTexture() const {
-	return Texture;
-}
+
 void Object::addState(std::string name, int startingpos, int frames) {
 
 	SpriteSettings::SpriteOptions Settings(name.c_str(), states[0].getWidth(), states[0].getHeight(),startingpos,frames);

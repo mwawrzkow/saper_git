@@ -31,7 +31,6 @@ add_executable(Saper Saper.cpp
      
      src/WindowStates/LoadSprite/texturebackend/Cache.cpp
      src/WindowStates/LoadSprite/texturebackend/SpriteOptions.cpp
-     src/WindowStates/LoadSprite/texturebackend/TextureLoad.cpp
      src/WindowStates/LoadSprite/Object.cpp
      src/WindowStates/LoadSprite/RenderClass.cpp)
 if(SFML_FOUND)

@@ -37,7 +37,7 @@ public:
 	/*MenuConstructor.
 	 *Requies directory where it tries to open config.conf file
 	 */
-	MainMenu(std::string MenuFileList);
+	MainMenu(std::string MenuFileList, std::shared_ptr<Texture::Cache>TextureCache);
 	/*
 	 * Base function that will load all Graphic into GPU
 	 */

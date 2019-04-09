@@ -1,8 +1,13 @@
-#include <Poco/Thread.h>
-#include "src/MSSFMLView.h"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <cstddef>
 #include <iostream>
+#include <iterator>
 #include <string>
-#include <unistd.h>
+
+#include "src/MSSFMLView.h"
+#include "src/WindowStates/FileIO/FileInformation/InformationType.h"
+#include "src/WindowStates/FileIO/FileManager.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 const char slash = 0x5C;

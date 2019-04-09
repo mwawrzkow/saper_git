@@ -6,18 +6,21 @@
  */
 
 #include "RenderClass.h"
-#include "Poco/NumberParser.h"
-#include <Poco/String.h>
+#include "texturebackend/Cache.h"
+#include <SFML/Graphics/Texture.hpp>
 #include <fstream>
 #include <iostream>
 #include <iterator>
 #include <regex>
-
+#include <Poco/NumberParser.h>
+#include <Poco/String.h>
 namespace WindowState {
 
 RenderClass::RenderClass(std::string ConfigFile,
-		std::vector<std::string>*allowedNames) :
-		ConfigFile(ConfigFile), allowedNames(allowedNames) {
+		std::vector<std::string>*allowedNames,
+		std::shared_ptr<Texture::Cache> TextureCache) :
+		ConfigFile(ConfigFile), allowedNames(allowedNames), Textures(
+				TextureCache) {
 
 }
 
@@ -35,35 +38,26 @@ void RenderClass::LoadTextureDirectories() {
 	while (std::getline(file, line)) {
 		std::vector<std::string> tokens = values(line);
 		if (isRepeated(ConfigFile + tokens[0])) {
-			Graphic::Object tmp(tokens[0].c_str(), tokens[1].c_str(),
-					Poco::NumberParser::parse(tokens[2]),
-					Poco::NumberParser::parse(tokens[3]),
-					Poco::NumberParser::parse(tokens[4]),
-					Poco::NumberParser::parse(tokens[5]),
-					Poco::NumberParser::parse(tokens[6]),
-					Poco::NumberParser::parse(tokens[7]));
-			int states = Poco::NumberParser::parse(tokens[8]);
-			for(int i = states ; i > 0 ; --i)
-			{
-				std::getline(file,line);
+			Graphic::Object tmp;
+			int states = 0 ;
+			for (int i = states; i > 0; --i) {
+				std::getline(file, line);
 				tokens = values(line);
-				tmp.addState(tokens[0],Poco::NumberParser::parse(tokens[3]),Poco::NumberParser::parse(tokens[4]));
+				//tmp.addState(tokens[0], Poco::NumberParser::parse(tokens[3]),
+				//		Poco::NumberParser::parse(tokens[4]));
+				Graphic::Object ttmp;
 
 			}
 			toRender.push_back(tmp);
 		} else {
-			const SpriteSettings::TextureLoad tmp(findTexture(tokens[0]));
-			Graphic::Object sprite(tmp, tokens[1].c_str(),
-					Poco::NumberParser::parse(tokens[2]),
-					Poco::NumberParser::parse(tokens[3]),
-					Poco::NumberParser::parse(tokens[4]),
-					Poco::NumberParser::parse(tokens[5]));
+			// Add Texture::Cache Implementation
 
 			int states = Poco::NumberParser::parse(tokens[8]);
-			for(int i = states ; i > 0 ; --i)
-			{
-				std::getline(file,line);
-				sprite.addState(tokens[0],Poco::NumberParser::parse(tokens[3]),Poco::NumberParser::parse(tokens[4]));
+			Graphic::Object sprite;
+			for (int i = states; i > 0; --i) {
+				std::getline(file, line);
+				//sprite.addState(tokens[0], Poco::NumberParser::parse(tokens[3]),
+				//	Poco::NumberParser::parse(tokens[4]));
 
 			}
 			toRender.push_back(sprite);
@@ -87,13 +81,7 @@ std::string RenderClass::findTextureLoc(std::string tmp) {
 			return temp;
 	return tmp;
 }
-const SpriteSettings::TextureLoad &RenderClass::findTexture(std::string tmp) {
-	for (Graphic::Object &a : toRender) {
-		if (a.getSharedTexture().getLocation() == tmp)
-			return a.getSharedTexture();
-	}
-	throw "Error";
-}
+
 std::vector<std::string> RenderClass::values(std::string line) {
 	std::vector<std::string> tmp;
 	std::regex world_regex("(\\S+)");
@@ -109,6 +97,15 @@ std::vector<std::string> RenderClass::values(std::string line) {
 	}
 	return tmp;
 
+}
+
+void RenderClass::addTexture(std::string File, std::string textureloc,
+		bool isRepeated, bool isSmooth) {
+	sf::Texture myPoorTexture;
+	myPoorTexture.loadFromFile(textureloc);
+	myPoorTexture.setRepeated(isRepeated);
+	myPoorTexture.setSmooth(isSmooth);
+	Textures->addTexture(File, myPoorTexture);
 }
 
 const ClassStates::state RenderClass::getState() const {
