@@ -69,7 +69,7 @@ void RenderClass::LoadTextureDirectories() {
 
 }
 bool RenderClass::isRepeated(std::string tmp) {
-	if (tmp == findTextureLoc(tmp))
+	if (Textures->getTexture(tmp) != NULL)
 		return true;
 	return false;
 

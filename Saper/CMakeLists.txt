@@ -32,7 +32,8 @@ add_executable(Saper Saper.cpp
      src/WindowStates/LoadSprite/texturebackend/Cache.cpp
      src/WindowStates/LoadSprite/texturebackend/SpriteOptions.cpp
      src/WindowStates/LoadSprite/Object.cpp
-     src/WindowStates/LoadSprite/RenderClass.cpp)
+     src/WindowStates/LoadSprite/RenderClass.cpp
+     src/WindowStates/LoadSprite/ClickEvent.cpp)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(Saper ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})

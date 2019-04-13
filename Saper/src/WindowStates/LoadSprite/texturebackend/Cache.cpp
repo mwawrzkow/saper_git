@@ -18,7 +18,6 @@ void Cache::addTexture(std::string name, sf::Texture temp) {
 }
 sf::Texture* Cache::getTexture(std::string name) {
 	//Add find
-	return &TextureCache[name];
+	return &TextureCache.find(name)->second;
 }
-
 } /* namespace Texture */

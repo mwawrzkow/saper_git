@@ -54,4 +54,15 @@ void Object::addState(std::string name, int startingpos, int frames) {
 			"Framerate: " << Settings.getFrameRate() << std::endl;
 	states.push_back(Settings);
 }
+
+
+void Object::updateState(std::string name){
+
+}
+
+
+const ObjectSettings::Click* Object::getClicable(){
+	return &clicable;
+}
+
 } /* namespace Graphic */
