@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+filename=input("fileName: ")
+fileext=input("file extension: ")
+file=open(filename+"."+fileext, "w")
+startingPos=0
+while 1:
+	spritename=input("char_spritename: ")
+	width=input("int_width: ")
+	height=input("int_heiht: ")
+	fRames=input("int_frames: ")
+	issmooth=input("bool_isSmooth: ")
+	isrep=input("bool_isRepetable: ")
+	spritest=input("int_spriteStates: ")
+	file.write(filename+"."+fileext+" "+spritename+" "+width+" "+height+" "+str(startingPos)+" "+fRames+" "+issmooth+" "+isrep+" "+spritest)
+	z=int(height)
+	heh9=int(spritest)
+	for a in range(heh9):
+		print("wartosc: "+str(a)+"\\"+spritest)
+		nAzwa=input("Nazwa wartosci: ")
+		intframes=input("int_frames: ")
+		startingPos+=(z+1)
+		file.write("\n")
+		file.write(nAzwa+" "+width+" "+height+" "+str(startingPos)+" "+fRames+" "+issmooth+" "+isrep)
+	file.write("\n")
+	n=input("Koniec?: ")
+	if n=="y": 
+		file.close()
+		break
