@@ -9,28 +9,28 @@
 #include <iostream>
 #include <string>
 namespace GameTextView {
-MSBoardTextView::MSBoardTextView(GameLogic::MinesweeperBoard &temp) :
+MSBoardTextView::MSBoardTextView(GameLogic::MinesweeperBoard *temp) :
 		game(temp) {
 }
 
 void MSBoardTextView::debug() const {
-	for (int x = 0; x < game.getBoardWidth(); x++) {
-		for (int y = 0; y < game.getBoardHeight(); y++) {
+	for (int x = 0; x < game->getBoardWidth(); x++) {
+		for (int y = 0; y < game->getBoardHeight(); y++) {
 			std::cout << "[";
 			TypeOfField tile;
-			tile = SingleField(x,y);
-			switch(tile){
+			tile = SingleField(x, y);
+			switch (tile) {
 			case TypeOfField::MINE:
 				std::cout << "M";
 				break;
 			case TypeOfField::NEARMINE:
-				std::cout << game.countMines(x,y);
+				std::cout << game->countMines(x, y);
 				break;
 			case TypeOfField::REVEALED:
 				std::cout << ".";
 				break;
 			case TypeOfField::FLAG:
-				std::cout <<"F";
+				std::cout << "F";
 				break;
 			case TypeOfField::HIDDEN:
 				std::cout << "";
@@ -45,18 +45,26 @@ void MSBoardTextView::debug() const {
 	}
 }
 TypeOfField MSBoardTextView::SingleField(unsigned int x, unsigned int y) const {
-	if (game.isRevealed(x, y)) {
-		if (game.hasMine(x, y))
+	if (game->isRevealed(x, y)) {
+		if (game->hasMine(x, y))
 			return TypeOfField::MINE;
-		if (game.countMines(x, y))
+		if (game->countMines(x, y) != 0)
 			return TypeOfField::NEARMINE;
 		return TypeOfField::REVEALED;
 	} else {
-		if (game.hasFlag(x, y))
+		if (game->hasFlag(x, y))
 			return TypeOfField::FLAG;
 		return TypeOfField::HIDDEN;
 	}
 	return TypeOfField::ERROR;
 }
-
+int MSBoardTextView::getBoardHeight() {
+	return game->getBoardHeight();
+}
+int MSBoardTextView::getBoardWidth() {
+	return game->getBoardWidth();
+}
+int MSBoardTextView::countMines(int x, int y) {
+	return game->countMines(x, y);
+}
 }

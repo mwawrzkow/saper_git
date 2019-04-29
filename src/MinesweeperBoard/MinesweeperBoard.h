@@ -47,11 +47,13 @@ class MinesweeperBoard {
 	   * Actual state of game
 	   */
 	  GameState state;
+
 public:
 	  /*Constructor for MinesweeperBoard. Width, height, and Game mode
 	   * Game modes DEBUG, EASY, NORMAL, HARD, TEST1
 	   * TEST1 has predefined pattern.
 	   */
+	void endGame();
 	MinesweeperBoard(int x, int y, GameMode mode);
 	/*
 	 * Changes Value of Flag atribute in Board

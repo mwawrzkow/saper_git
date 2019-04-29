@@ -27,12 +27,12 @@ class MSBoardTextView {
 	 * Constant reference to MinesweeperBoard object.
 	 * Gives ability to show board as for user
 	 */
-	const GameLogic::MinesweeperBoard &game;
+	const GameLogic::MinesweeperBoard *game;
 public:
 	/*
 	 * Constructor NEEDS MinesweeperBoard object From GameLogic to class work correctly
 	 */
-	MSBoardTextView(GameLogic::MinesweeperBoard &core);
+	MSBoardTextView(GameLogic::MinesweeperBoard*);
 	/*
 	 * Returns Type of Field to render.
 	 * If TypeOfField is equal NEARMINE function near will return value of nearest mines
@@ -41,6 +41,9 @@ public:
 	/*
 	 * Displays debug mode of user board in terminal
 	 */
+	int countMines(int,int);
+	int getBoardHeight();
+	int getBoardWidth();
 	void debug() const;
 };
 }

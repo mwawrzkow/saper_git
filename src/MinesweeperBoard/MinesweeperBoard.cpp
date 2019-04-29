@@ -114,8 +114,7 @@ bool MinesweeperBoard::hasFlag(int x, int y) const {
 
 void MinesweeperBoard::toggleFlag(int x, int y) {
 	if (isRightField(x, y) && board[x][y].isRevealed // @suppress("Suggested parenthesis around expression")
-			&& getGameState() == GameState::FINISHED_LOSS
-			|| getGameState() == GameState::FINISHED_WIN) // @suppress("Suggested parenthesis around expression")
+			&& getGameState() != GameState::RUNNING) // @suppress("Suggested parenthesis around expression")
 		return;
 	board[x][y].hasFlag = !board[x][y].hasFlag;
 }
@@ -137,9 +136,11 @@ void MinesweeperBoard::revealField(int x, int y) {
 
 	if (isRevealed(x, y))
 		return;
+	if(hasFlag(x,y))
+		return;
 
 	if (getGameState() != GameState::RUNNING)
-		return;
+		endGame();
 	if (!board[x][x].hasFlag)
 		if (!hasMine(x, y)) {
 			board[x][y].isRevealed = true;
@@ -161,6 +162,12 @@ void MinesweeperBoard::revealField(int x, int y) {
 			} else {
 				revealField(a, z);
 			}
+}
+void MinesweeperBoard::endGame(){
+	for(int x = 0; x <= width;x++)
+		for(int y = 0; y <= height; y++)
+			if(isRightField(x,y))
+				board[x][y].isRevealed = true;
 }
 
 }
