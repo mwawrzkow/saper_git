@@ -74,9 +74,9 @@ void MainMenu::start(GameLogic::GameMode &){}
 
 void MainMenu::setUnits() {
 	background->setPosition(0, 0);
-	newgame->setPosition(1000, 300);
-	options->setPosition(1000, 450);
-	exit->setPosition(1000, 600);
+	newgame->setPosition(1000, 100);
+	options->setPosition(1000, 250);
+	exit->setPosition(1000, 400);
 	background->createSprite();
 	newgame->createSprite();
 	options->createSprite();
@@ -90,7 +90,7 @@ void MainMenu::update() {
 		settings->toggleVisible();
 		newgame->resetClick();
 		newgame->ToggleClicable();
-		settings->setPosition(200,200);
+		settings->setPosition(100,200);
 	}
 	if(PlayerRequest.exit)
 	{

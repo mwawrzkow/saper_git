@@ -33,7 +33,7 @@ void getexepath(const std::string lol, std::string &filelocation) {
 
 int main(int argc, char **argv) {
 	std::string s;
-
+	//XInitThreads();
 	getexepath(argv[0], s);
 	std::cout << s + "config.conf" << std::endl;
 	IO::FileManager settings(s + "config.conf");

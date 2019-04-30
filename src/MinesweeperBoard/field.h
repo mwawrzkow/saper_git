@@ -5,6 +5,7 @@ struct Field
 	bool hasMine = false;
 	bool hasFlag = false;
 	bool isRevealed = false;
+	void clear();
 };
 
 

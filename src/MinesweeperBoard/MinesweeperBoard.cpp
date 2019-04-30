@@ -9,41 +9,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
-namespace GameLogic{
+#include <vector>
+#include <numeric>
+#include <algorithm>
+#include <ctime>
+namespace GameLogic {
 MinesweeperBoard::MinesweeperBoard(int x, int y, GameMode mode) :
-		width(x - 1), height(y - 1), state(GameState::RUNNING) {
-	if (mode != GameMode::DEBUG && mode != GameMode::TEST1) {
-		srand(time(NULL));
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				int z = rand() % 10 + 1;
-				if (z <= mode) {
-					board[x][y].hasMine = true;
-					minescount++;
-				}
-
-			}
-		}
-	} else if (mode == GameMode::TEST1) {
-		bool boardmines[10][10] = {
-				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 0, 1, 0,0, 0, 0, 0, 0, 0, 0 },
-				{ 0, 0, 1, 0, 0, 1, 0, 0, 1, 0 },
-				{ 0, 0,0, 1, 1, 0, 0, 0, 0, 0 },
-				{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
-				{ 0,0, 0, 1, 0, 1, 0, 0, 0, 0 },
-				{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 },
-				{0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
-				{ 0, 0, 1, 0, 0, 0, 0, 0, 1, 0 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } };
-		width = 10;
-		height = 10;
-		for (int x = 0; x < width; x++)
-			for (int y = 0; y < height; y++)
-				board[x][y].hasMine = boardmines[x][y];
-
-		minescount++;
-	}
+		width(x - 1), height(y - 1), state(GameState::RUNNING), mode(mode) {
 
 }
 
@@ -131,12 +103,19 @@ bool MinesweeperBoard::isRevealed(int x, int y) const {
 	return false;
 }
 void MinesweeperBoard::revealField(int x, int y) {
+	if (firstMove == true) {
+		repeat: fillFields();
+		if (hasMine(x, y))
+			goto repeat;
+		firstMove = false;
+	}
+
 	if (!isRightField(x, y))
 		return;
 
 	if (isRevealed(x, y))
 		return;
-	if(hasFlag(x,y))
+	if (hasFlag(x, y))
 		return;
 
 	if (getGameState() != GameState::RUNNING)
@@ -163,11 +142,65 @@ void MinesweeperBoard::revealField(int x, int y) {
 				revealField(a, z);
 			}
 }
-void MinesweeperBoard::endGame(){
-	for(int x = 0; x <= width;x++)
-		for(int y = 0; y <= height; y++)
-			if(isRightField(x,y))
+void MinesweeperBoard::endGame() {
+	for (int x = 0; x <= width; x++)
+		for (int y = 0; y <= height; y++)
+			if (isRightField(x, y))
 				board[x][y].isRevealed = true;
 }
 
+void MinesweeperBoard::fillFields() {
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
+			board[x][y].clear();
+	minescount = 0;
+	std::vector<int> minesXPlaces(width + 2);
+	std::vector<int> minesYPlaces(height + 2);
+
+	std::iota(minesYPlaces.begin(), minesYPlaces.end(), 0);
+	std::iota(minesXPlaces.begin(), minesXPlaces.end(), 0);
+
+	std::srand(unsigned(std::time(0)));
+	std::random_shuffle(minesXPlaces.begin(), minesXPlaces.end());
+	std::random_shuffle(minesYPlaces.begin(), minesYPlaces.end());
+	int bomblist = (width+2) * (height+2);
+	if (GameMode::EASY == mode) {
+		bomblist*= 0.1;
+	} else if (GameMode::NORMAL) {
+		bomblist *= 0.2;
+	} else if (GameMode::HARD) {
+		bomblist *= 0.3;
+	}
+	if (mode != GameMode::DEBUG && mode != GameMode::TEST1) {
+		do{
+			int x = (std::rand()-1)%width+1;
+			int y = (std::rand()-1)%height+1;
+			board[minesXPlaces[x]][minesYPlaces[y]].hasMine = true;
+			bomblist--;
+			minescount++;
+		}while(bomblist != 0);
+
+	} else if (mode == GameMode::TEST1) {
+		bool boardmines[10][10] = { { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 0, 1, 0,
+				0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0, 1, 0, 0, 1, 0 }, { 0, 0,
+				0, 1, 1, 0, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0,
+				0, 0, 1, 0, 1, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 }, {
+				0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+				{ 0, 0, 1, 0, 0, 0, 0, 0, 1, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } };
+		width = 10;
+		height = 10;
+		for (int x = 0; x < width; x++)
+			for (int y = 0; y < height; y++)
+				board[x][y].hasMine = boardmines[x][y];
+
+		minescount++;
+	}
+}
+
+}
+void Field::clear() {
+	hasMine = false;
+	hasFlag = false;
+	isRevealed = false;
 }

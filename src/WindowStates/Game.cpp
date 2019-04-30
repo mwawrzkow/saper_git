@@ -114,14 +114,14 @@ void Game::update() {
 	if (GameControler.getGameState() == GameLogic::GameState::RUNNING) {
 		updateBoard();
 	} else if(isGameEnded && !isBoardUpdated){
+		isBoardUpdated = !isBoardUpdated;
 		GameControler.getBoard()->endGame();
-		updateBoard();
 		for (GameUnits::Tile *e : Tiles) {
 			e->setNClicable();
 			e->setNRClicable();
-			isBoardUpdated = !isBoardUpdated;
 		}
 	}else{
+		updateBoard();
 		isGameEnded = true;
 	}
 }

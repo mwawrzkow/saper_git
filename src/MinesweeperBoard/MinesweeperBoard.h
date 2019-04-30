@@ -11,48 +11,55 @@
 #ifndef SRC_MINESWEEPERBOARD_H_
 #define SRC_MINESWEEPERBOARD_H_
 #include "field.h"
-namespace GameLogic{
+namespace GameLogic {
 /*
  *  Available game modes, Do not change if not consultated with author of class
  */
-enum  GameMode  { DEBUG, EASY, NORMAL, HARD , TEST1};
+enum GameMode {
+	DEBUG, EASY, NORMAL, HARD, TEST1
+};
 /*
  * All available states of game
  */
-enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
+enum GameState {
+	RUNNING, FINISHED_WIN, FINISHED_LOSS
+};
 
 class MinesweeperBoard {
 	/*
 	 * Amount of revealed tiles
 	 */
-	  int revealCount = 0;
-	  /*
-	   * Private method to check if tile is in rage of board
-	   */
-	  bool isRightField(int x, int y) const;
-	  /*
-	   * Definition of board
-	   */
-	  Field board[100][100];
-	  /*
-	   *  Variables that define Board Width and Height
-	   */
-	  int width;
-	  int height;
-	  /*
-	   * Amount of mines on board
-	   */
-	  int minescount = 0;
-	  /*
-	   * Actual state of game
-	   */
-	  GameState state;
+	int revealCount = 0;
+	bool firstMove = true;
+	/*
+	 * Private method to check if tile is in rage of board
+	 */
+	bool isRightField(int x, int y) const;
+	/*
+	 * Definition of board
+	 */
+	Field board[100][100];
+	/*
+	 *  Variables that define Board Width and Height
+	 */
+	int width;
+	GameMode mode;
+	int height;
+	/*
+	 * Amount of mines on board
+	 */
+	int minescount = 0;
+	/*
+	 * Actual state of game
+	 */
+	GameState state;
+	void fillFields();
 
 public:
-	  /*Constructor for MinesweeperBoard. Width, height, and Game mode
-	   * Game modes DEBUG, EASY, NORMAL, HARD, TEST1
-	   * TEST1 has predefined pattern.
-	   */
+	/*Constructor for MinesweeperBoard. Width, height, and Game mode
+	 * Game modes DEBUG, EASY, NORMAL, HARD, TEST1
+	 * TEST1 has predefined pattern.
+	 */
 	void endGame();
 	MinesweeperBoard(int x, int y, GameMode mode);
 	/*
