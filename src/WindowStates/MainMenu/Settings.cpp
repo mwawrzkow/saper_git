@@ -11,7 +11,7 @@
 namespace MenuUnits {
 
 Settings::Settings(const Graphic::ObjectInterface& settings, MainMenuRequests::request* req) : // @suppress("Class members should be properly initialized")
-		Graphic::ObjectInterface(settings),req(req){
+		Buttons(settings),req(req){
 	// TODO Auto-generated constructor stub
 
 }
@@ -33,6 +33,7 @@ void Settings::setPosition(float x, float y) {
 }
 void Settings::updateState(std::string state) {}
 void Settings::update() {
+	spriteUpdate();
 	if(easy->checkClick())
 		req->newgamereq = GameLogic::GameMode::EASY;
 	if(normal->checkClick())

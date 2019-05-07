@@ -15,7 +15,7 @@
 #ifndef SRC_WINDOWSTATES_LOADSPRITE_OBJECTINTERFACE_H_
 #define SRC_WINDOWSTATES_LOADSPRITE_OBJECTINTERFACE_H_
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
 #include "ClickEvent.h"
@@ -29,6 +29,7 @@ protected:
 	sf::Sprite Sprite;
 	std::vector<SpriteSettings::SpriteOptions>states;
 	int state = 0;
+	sf::Clock elapsedTime;
 private:
 	int maxStates = 0;
 	int frame = 0;

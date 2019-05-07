@@ -12,7 +12,7 @@ MS_SFML_View::MS_SFML_View(Graphic::Render &window, IO::FileManager &settings,
 		std::string gamedir) :
 		Cache(new Texture::Cache), TextureCache(Cache), window(window), gamedir(
 				gamedir), settings(settings), WindowState(
-				GameState::State::MainMenu) {
+				GameState::State::MainMenu),Event(window.getMutex()) {
 	createGameStates();
 	Event.setWindow(window.getWindow());
 	start();
@@ -43,13 +43,13 @@ void MS_SFML_View::start() {
 			stateOfView();
 		if (!doesRenderThreadWork) {
 			try {
-				//Display.start(window);
+				Display.start(window);
 				doesRenderThreadWork = true;
 			} catch (Poco::Exception &e) {
 				std::cout << e.message() << std::endl;
 			}
 		}
-		window.runThreadSafe();
+		//window.runThreadSafe();
 		states[WindowState]->update();
 		Event.EventChecker();
 		if (isAskingForChange)
@@ -67,11 +67,10 @@ void MS_SFML_View::stateOfView() {
 	{
 		states.at(WindowState)->start(*states.at(0)->askedGameMode());
 	}
-	window.renderQueue(*states.at(WindowState)->getUnits());
+	window.renderQueue(*states.at(WindowState));
 	Event.setObjects(states.at(WindowState));
 	stateHasChanged = false;
 }
 MS_SFML_View::~MS_SFML_View() {
-	Display.~Thread();
 }
 }

@@ -105,8 +105,10 @@ bool MinesweeperBoard::isRevealed(int x, int y) const {
 void MinesweeperBoard::revealField(int x, int y) {
 	if (firstMove == true) {
 		repeat: fillFields();
-		if (hasMine(x, y))
-			goto repeat;
+		for (int z = x - 1; z <= x+1; z++)
+			for (int c = y - 1; c <= y+1; c++)
+				if (hasMine(z, c))
+					goto repeat;
 		firstMove = false;
 	}
 
@@ -137,7 +139,6 @@ void MinesweeperBoard::revealField(int x, int y) {
 	for (int a = x - 1; a <= x + 1; a++)
 		for (int z = y - 1; z <= y + 1; z++)
 			if (hasMine(a, z)) {
-				break;
 			} else {
 				revealField(a, z);
 			}
@@ -147,15 +148,19 @@ void MinesweeperBoard::endGame() {
 		for (int y = 0; y <= height; y++)
 			if (isRightField(x, y))
 				board[x][y].isRevealed = true;
+	std::cout << "Mines Amount:" << minescount << std::endl;
+}
+int MinesweeperBoard::getRevealCount() const {
+	return revealCount;
 }
 
 void MinesweeperBoard::fillFields() {
-	for (int x = 0; x < width; x++)
-		for (int y = 0; y < height; y++)
+	for (int x = 0; x < width+1; x++)
+		for (int y = 0; y < height+1; y++)
 			board[x][y].clear();
 	minescount = 0;
-	std::vector<int> minesXPlaces(width + 2);
-	std::vector<int> minesYPlaces(height + 2);
+	std::vector<int> minesXPlaces(width + 1);
+	std::vector<int> minesYPlaces(height + 1);
 
 	std::iota(minesYPlaces.begin(), minesYPlaces.end(), 0);
 	std::iota(minesXPlaces.begin(), minesXPlaces.end(), 0);
@@ -163,22 +168,22 @@ void MinesweeperBoard::fillFields() {
 	std::srand(unsigned(std::time(0)));
 	std::random_shuffle(minesXPlaces.begin(), minesXPlaces.end());
 	std::random_shuffle(minesYPlaces.begin(), minesYPlaces.end());
-	int bomblist = (width+2) * (height+2);
+	int bomblist = (width + 1) * (height + 1);
 	if (GameMode::EASY == mode) {
-		bomblist*= 0.1;
+		bomblist *= 0.1;
 	} else if (GameMode::NORMAL) {
 		bomblist *= 0.2;
 	} else if (GameMode::HARD) {
 		bomblist *= 0.3;
 	}
 	if (mode != GameMode::DEBUG && mode != GameMode::TEST1) {
-		do{
-			int x = (std::rand()-1)%width+1;
-			int y = (std::rand()-1)%height+1;
+		do {
+			int x = (std::rand() - 1) % width + 1;
+			int y = (std::rand() - 1) % height + 1;
 			board[minesXPlaces[x]][minesYPlaces[y]].hasMine = true;
-			bomblist--;
 			minescount++;
-		}while(bomblist != 0);
+			bomblist--;
+		} while (bomblist != 0);
 
 	} else if (mode == GameMode::TEST1) {
 		bool boardmines[10][10] = { { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 0, 1, 0,

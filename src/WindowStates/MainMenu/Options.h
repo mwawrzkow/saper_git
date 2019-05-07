@@ -8,10 +8,11 @@
 #ifndef SRC_WINDOWSTATES_MAINMENU_OPTIONS_H_
 #define SRC_WINDOWSTATES_MAINMENU_OPTIONS_H_
 #include "../LoadSprite/ObjectInterface.h"
+#include "Buttons.h"
 
 namespace MenuUnits {
 
-class Options final :public Graphic::ObjectInterface {
+class Options final : public MainMenuButtons::Buttons {
 public:
 	Options(const Graphic::ObjectInterface&);
 	virtual void setPosition(float,float) override;

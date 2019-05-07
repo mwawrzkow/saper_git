@@ -10,21 +10,21 @@
 namespace Graphic {
 
 Render::Render(sf::RenderWindow &window) :
-		window(window), toRender(new std::vector<ObjectInterface*>) {
+		window(window), toRender(new std::vector<ObjectInterface*>),mutex() {
 	// TODO Auto-generated constructor stub
 }
 
-void Render::renderQueue(std::vector<ObjectInterface*>& toRender) {
+void Render::renderQueue(Controller::State &tmp ) {
 
-	this->toRender = &toRender;
+	this->toRender = tmp.getUnits();
 
 }
 sf::RenderWindow& Render::getWindow() {
 	return window;
 }
 void Render::run() {
-	sf::Time jumpValue = sf::seconds(1);
 	while (window.isOpen()) {
+		Poco::Mutex::ScopedLock lock(mutex);
 		window.clear();
 		for (ObjectInterface *e : *toRender) {
 			if(e->isVisible())
@@ -32,13 +32,6 @@ void Render::run() {
 		}
 		//		states[0]->resetStates();
 		window.display();
-		sf::Time time  = tmp.getElapsedTime();
-		for (ObjectInterface *e : *toRender)
-			if (time > jumpValue)
-			{
-				e->resetState();
-				tmp.restart();
-			}
 	}
 }
 void Render::runThreadSafe() {
@@ -60,6 +53,9 @@ void Render::runThreadSafe() {
 }
 Render::~Render() {
 	// TODO Auto-generated destructor stub
+}
+Poco::Mutex* Render::getMutex(){
+	return &mutex;
 }
 
 } /* namespace Objects */

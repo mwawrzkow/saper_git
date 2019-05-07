@@ -8,9 +8,11 @@
 #ifndef SRC_WINDOWSTATES_MAINMENU_NEWGAME_H_
 #define SRC_WINDOWSTATES_MAINMENU_NEWGAME_H_
 #include "../LoadSprite/ObjectInterface.h"
+#include "Buttons.h"
+
 namespace MenuUnits {
 
-class NewGame final: public Graphic::ObjectInterface {
+class NewGame final: public MainMenuButtons::Buttons {
 public:
 	NewGame(const Graphic::ObjectInterface&);
 	virtual void setPosition(float,float) override;

@@ -112,6 +112,7 @@ public:
 	 * Returns true if mine is on board
 	 */
 	bool hasMine(int x, int y) const;
+	int getRevealCount()const;
 };
 }
 #endif /* SRC_MINESWEEPERBOARD_H_ */

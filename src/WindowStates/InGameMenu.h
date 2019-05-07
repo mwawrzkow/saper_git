@@ -12,7 +12,8 @@
 namespace WindowState {
 
 class InGameMenu {
-	std::vector<sf::Sprite>render;
+
+
 public:
 	InGameMenu();
 };

@@ -25,7 +25,7 @@ add_executable(Saper Saper.cpp
      src/WindowStates/LoadingScreen.cpp
      src/WindowStates/MainMenu.cpp
      
-     
+     src/WindowStates/MainMenu/Buttons.cpp
      src/WindowStates/MainMenu/Background.cpp
      src/WindowStates/MainMenu/Exit.cpp
      src/WindowStates/MainMenu/NewGame.cpp
@@ -36,6 +36,9 @@ add_executable(Saper Saper.cpp
      src/WindowStates/MainMenu/Settings.cpp
      
      src/WindowStates/Game/Tile.cpp
+     src/WindowStates/Game/Counter.cpp
+     src/WindowStates/Game/Counter/Number.cpp
+     src/WindowStates/Game/Background.cpp
      src/WindowStates/Game/BoardBG.cpp
      
      src/WindowStates/LoadSprite/texturebackend/Cache.cpp

@@ -27,7 +27,8 @@ class MSBoardTextView {
 	 * Constant reference to MinesweeperBoard object.
 	 * Gives ability to show board as for user
 	 */
-	const GameLogic::MinesweeperBoard *game;
+	const GameLogic::MinesweeperBoard &game;
+	bool firstMove =false;
 public:
 	/*
 	 * Constructor NEEDS MinesweeperBoard object From GameLogic to class work correctly
@@ -41,10 +42,12 @@ public:
 	/*
 	 * Displays debug mode of user board in terminal
 	 */
-	int countMines(int,int);
-	int getBoardHeight();
-	int getBoardWidth();
+	int countMines(int,int)const;
+	int getBoardHeight()const;
+	int getBoardWidth()const;
+	int getMinesCount()const;
 	void debug() const;
+	bool wasFirstMove();
 };
 }
 #endif /* SRC_MSBOARDTEXTVIEW_H_ */

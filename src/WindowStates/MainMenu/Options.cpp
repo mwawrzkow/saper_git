@@ -10,7 +10,7 @@
 namespace MenuUnits {
 
 Options::Options(const Graphic::ObjectInterface& settings) :
-		Graphic::ObjectInterface(settings) {
+		Buttons(settings) {
 	ToggleClicable();
 }
 void Options::setPosition(float x, float y) {
@@ -29,5 +29,7 @@ void Options::updateState(std::string state) {
 }
 ;
 void Options::update() {
+	spriteUpdate();
+
 }
 } /* namespace MainMenu */

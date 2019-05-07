@@ -11,6 +11,8 @@
 #include "settingsbuttons/Easy.h"
 #include "settingsbuttons/Normal.h"
 #include "settingsbuttons/Hard.h"
+#include "Buttons.h"
+
 namespace MainMenuRequests{
 struct request
 {
@@ -20,7 +22,7 @@ struct request
 }
 namespace MenuUnits {
 
-class Settings final: public Graphic::ObjectInterface {
+class Settings final: public MainMenuButtons::Buttons {
 private:
 	SettingsButtons::Easy *easy;
 	SettingsButtons::Normal *normal;

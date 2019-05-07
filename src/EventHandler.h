@@ -7,6 +7,7 @@
 
 #ifndef EVENTHANDLER_H_
 #define EVENTHANDLER_H_
+#include "Poco/Mutex.h"
 #include "SFML/Graphics.hpp"
 #include "WindowStates/LoadSprite/ObjectInterface.h"
 #include "WindowStates/State.h"
@@ -16,8 +17,9 @@ class EventHandler {
 	sf::Event WindowEvent;
 	sf::RenderWindow *window;
 	Controller::State *Objects;
+	Poco::Mutex *renderMutex;
 public:
-	EventHandler();
+	EventHandler(Poco::Mutex *renderMutex);
 	void setWindow(sf::RenderWindow&);
 	void EventChecker();
 	void setObjects(Controller::State*);

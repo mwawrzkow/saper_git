@@ -9,7 +9,7 @@
 #include <iostream>
 namespace MenuUnits {
 Exit::Exit(const Graphic::ObjectInterface& settings,MainMenuRequests::request* req) :
-		Graphic::ObjectInterface(settings),req(req) {
+		Buttons(settings),req(req) {
 	ToggleClicable();
 }
 void Exit::setPosition(float x, float y) {
@@ -29,6 +29,8 @@ void Exit::updateState(std::string state) {
 }
 ;
 void Exit::update() {
+	spriteUpdate();
+
 }
 ;
 } /* namespace MainMenu */

@@ -102,6 +102,10 @@ void MainMenu::update() {
 		*sendRequest = !*sendRequest;
 		askState = GameState::Game;
 	}
+	for(Graphic::ObjectInterface *e:Units)
+	{
+
+	}
 }
 GameLogic::GameMode* MainMenu::askedGameMode(){
 return &PlayerRequest.newgamereq;

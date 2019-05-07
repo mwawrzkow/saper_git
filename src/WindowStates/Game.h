@@ -13,12 +13,19 @@
 #include "../MinesweeperBoard/BoardControler.h"
 #include "Game/Tile.h"
 #include "Game/BoardBG.h"
+#include "Game/Background.h"
+#include "Game/Counter.h"
+#include "InGameMenu.h"
 namespace WindowState {
 
 class Game: public Controller::State {
+	CountingObject::Counter *Flags;
+	CountingObject::Counter *Mines;
 	std::vector<GameUnits::Tile*>Tiles;
 	std::vector<GameUnits::BoardBG*>BoardBG;
+	GameUnits::backGround* backGround;
 	GameControler::BoardControler GameControler;
+	InGameMenu menu;
 	bool isGameEnded = false;
 	bool isBoardUpdated = false;
 private:

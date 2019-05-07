@@ -14,8 +14,13 @@ Game::Game(std::string ConfigFile, std::shared_ptr<Texture::Cache> TextureCache,
 		bool* askForChange) :
 		State(ConfigFile, TextureCache, askForChange) {
 	LoadFiles();
+	StateAdd("BACKGROUND");
 	StateAdd("BOARD");
 	StateAdd("TILE");
+	StateAdd("MINESCOUNT");
+	StateAdd("NUMBERS");
+	StateAdd("FLAGCOUNT");
+
 	// TODO Auto-generated constructor stub
 }
 void Game::start(GameLogic::GameMode &mode) {
@@ -36,9 +41,15 @@ void Game::start(GameLogic::GameMode &mode) {
 void Game::CreateUnits() {
 	int boardWidth = GameControler.getView()->getBoardWidth();
 	int boardHeight = GameControler.getView()->getBoardHeight();
-	int offsetx = 25, offsety = 25;
+	int offsetx = 300, offsety = 25;
 	for (int i = 0; i < Render.getQueue().size(); i++) {
 		if (Render.getQueue().at(i)->getName() == availibeNames[0]) {
+			backGround = new GameUnits::backGround(*Render.getQueue().at(i));
+			backGround->setPosition(0, 0);
+			Units.push_back(backGround);
+		}
+
+		if (Render.getQueue().at(i)->getName() == availibeNames[1]) {
 			for (int x = 0; x <= 9 + 1; x++) {
 				for (int y = 0; y <= 9 + 1; y++) {
 					float scale = 1.2;
@@ -53,7 +64,7 @@ void Game::CreateUnits() {
 
 				}
 			}
-		} else if (Render.getQueue().at(i)->getName() == availibeNames[1]) {
+		} else if (Render.getQueue().at(i)->getName() == availibeNames[2]) {
 			for (int x = 0; x <= boardWidth; x++) {
 				for (int y = 0; y <= boardHeight; y++) {
 					float TileScale;
@@ -84,23 +95,39 @@ void Game::CreateUnits() {
 					Tiles.push_back(tile);
 				}
 			}
+		} else if (Render.getQueue().at(i)->getName() == availibeNames[3]) {
+			Mines = new CountingObject::Counter(*Render.getQueue().at(i));
+		}else if(Render.getQueue().at(i)->getName() == availibeNames[5])
+		{
+			Flags = new CountingObject::Counter(*Render.getQueue().at(i));
+		} else if (Render.getQueue().at(i)->getName() == availibeNames[4]) {
+			Mines->setGraphicForNumbers(*Render.getQueue().at(i));
+			//Flags->setGraphicForNumbers(*Render.getQueue().at(i));
 		}
 	}
 	for (GameUnits::BoardBG *e : BoardBG)
 		Units.push_back(e);
 	for (GameUnits::Tile *e : Tiles)
 		Units.push_back(e);
+	std::vector<Graphic::ObjectInterface*> tmpUnits;
+	tmpUnits = Mines->getGroupOfObjects();
+	tmpUnits.push_back(Mines);
+	std::reverse(tmpUnits.begin(), tmpUnits.end());
+	Units.insert(Units.end(), tmpUnits.begin(), tmpUnits.end());
 	setUnits();
 }
 GameLogic::GameMode* Game::askedGameMode() {
 	return nullptr;
 }
 void Game::update() {
+	State::update();
 	for (GameUnits::Tile *e : Tiles) {
 		if (e->checkClick() && e->getSpriteOptions().isChanged()) {
 			std::cout << "Reveal field at x:" << e->getX() << " y:" << e->getY()
 					<< std::endl;
 			GameControler.getInput()->revealField(e->getX(), e->getY());
+			if (GameControler.getView()->wasFirstMove())
+				Mines->howManyMines(GameControler.getView()->getMinesCount());
 			e->getSpriteOptions().changed();
 			e->resetClick();
 		} else if (e->checkrClick() && e->getSpriteOptions().isChanged()) {
@@ -113,14 +140,14 @@ void Game::update() {
 	}
 	if (GameControler.getGameState() == GameLogic::GameState::RUNNING) {
 		updateBoard();
-	} else if(isGameEnded && !isBoardUpdated){
+	} else if (isGameEnded && !isBoardUpdated) {
 		isBoardUpdated = !isBoardUpdated;
 		GameControler.getBoard()->endGame();
 		for (GameUnits::Tile *e : Tiles) {
 			e->setNClicable();
 			e->setNRClicable();
 		}
-	}else{
+	} else {
 		updateBoard();
 		isGameEnded = true;
 	}
@@ -153,6 +180,8 @@ void Game::updateBoard() {
 	}
 }
 void Game::setUnits() {
+	//Flags->setPosition(700,700);
+	Mines->setPosition(50, 25);
 	for (Graphic::ObjectInterface* e : Units) {
 		e->createSprite();
 	}

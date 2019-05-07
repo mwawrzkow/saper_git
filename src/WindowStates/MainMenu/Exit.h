@@ -9,10 +9,10 @@
 #define SRC_WINDOWSTATES_MAINMENU_EXIT_H_
 #include "../LoadSprite/ObjectInterface.h"
 #include "Settings.h"
-
+#include "Buttons.h"
 namespace MenuUnits {
 
-class Exit final: public Graphic::ObjectInterface {
+class Exit final: public MainMenuButtons::Buttons{
 	MainMenuRequests::request *req;
 public:
 	Exit(const Graphic::ObjectInterface&,MainMenuRequests::request* );

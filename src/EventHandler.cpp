@@ -9,8 +9,8 @@
 #include <iostream>
 namespace SFML_Handlers {
 
-EventHandler::EventHandler() :
-		window(new sf::RenderWindow),Objects(){
+EventHandler::EventHandler(Poco::Mutex *renderMutex) :
+		window(new sf::RenderWindow),Objects(),renderMutex(renderMutex){
 	// TODO Auto-generated constructor stub
 
 }
@@ -21,6 +21,7 @@ void EventHandler::closeGame(){
 	window->close();
 }
 void EventHandler::EventChecker() {
+	renderMutex->lock();
 	while (window->pollEvent(WindowEvent)) {
 		// "close requested" event: we close the window
 		if (WindowEvent.type == sf::Event::Closed)
@@ -28,6 +29,7 @@ void EventHandler::EventChecker() {
 		if (WindowEvent.type == sf::Event::MouseButtonPressed)
 			mousePress();
 	}
+	renderMutex->unlock();
 }
 void EventHandler::mousePress() {
 	float x = WindowEvent.mouseButton.x;
@@ -64,5 +66,4 @@ Objects = tmp;
 EventHandler::~EventHandler() {
 // TODO Auto-generated destructor stub
 }
-
 } /* namespace SFML_Handlers */
